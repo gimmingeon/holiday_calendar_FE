@@ -7,22 +7,25 @@ export default function SignUp() {
 
     const navigate = useNavigate();
 
-    const [login_id, setLogin_id] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
 
     const handleSignUp = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post('/user', {
-                login_id,
+                email,
                 password,
-                name
+                name,
+                phoneNumber
             });
             alert(response.data.message)
-            setLogin_id("");
+            setEmail("");
             setPassword("");
             setName("");
+            setPhoneNumber('');
             navigate('/');
         } catch (error) {
             alert(error.response?.data?.message || "회원가입에 실패했습니다.");
@@ -35,12 +38,12 @@ export default function SignUp() {
 
             <form onSubmit={handleSignUp}>
                 <div>
-                    <label htmlFor="id">아이디</label>
+                    <label htmlFor="id">이메일</label>
                     <input
-                        id="id"
-                        type="id"
-                        value={login_id}
-                        onChange={(e) => setLogin_id(e.target.value)}
+                        id="email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                     />
                 </div>
@@ -63,6 +66,17 @@ export default function SignUp() {
                         type="name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                        required
+                    />
+                </div>
+
+                <div>
+                    <label>핸드폰 번호</label>
+                    <input
+                        id="phoneNumber"
+                        type="phoneNumber"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
                         required
                     />
                 </div>

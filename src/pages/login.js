@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import '../css/login.css'
 
 export default function Login() {
-    const [login_id, setLogin_id] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     let navigate = useNavigate();
 
@@ -13,10 +13,10 @@ export default function Login() {
 
         try {
             const response = await axios.post('/user/login', {
-                login_id,
+                email,
                 password
             });
-            setLogin_id("");
+            setEmail("");
             setPassword("");
             alert(response.data.message)
             navigate('/');
@@ -30,12 +30,12 @@ export default function Login() {
             <h1>로그인</h1>
             <form onSubmit={handleLogin} className="login-form">
                 <div className="form-group">
-                    <label htmlFor="id">아이디</label>
+                    <label htmlFor="id">이메일</label>
                     <input
-                        id="id"
-                        type="id"
-                        value={login_id}
-                        onChange={(e) => setLogin_id(e.target.value)}
+                        id="email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                     />
                 </div>
