@@ -1,0 +1,104 @@
+/* 전체 컨테이너 */
+.biweekly-container {
+    padding: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: sans-serif;
+}
+
+/* 입력 및 버튼 */
+.biweekly-container input[type="text"] {
+    padding: 0.5rem;
+    width: 60%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.biweekly-container button {
+    padding: 0.5rem 1rem;
+    margin-left: 0.5rem;
+    border: none;
+    background-color: #1976d2;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.biweekly-container button:hover {
+    background-color: #1259a3;
+}
+
+/* 요일 버튼 */
+.weekday-button {
+    padding: 0.5rem 1rem;
+    border: 1px solid #aaa;
+    background-color: #f0f0f0;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.weekday-button.selected {
+    background-color: #4caf50;
+    color: white;
+    border-color: #388e3c;
+}
+
+/* 멤버 카드 */
+.member-card {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.member-card:hover {
+    background-color: #f9f9f9;
+}
+
+/* 격주 배정 버튼 */
+.assign-button {
+    display: inline-block;
+    margin: 1rem 0;
+    padding: 0.75rem 1.5rem;
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.assign-button:hover {
+    background-color: #f57c00;
+}
+
+/* 멤버 카드 선택 시 강조 */
+.member-card.selected {
+    background-color: #d1e7dd;
+    border-color: #0f5132;
+}
+
+/* 요일 버튼 컨테이너 */
+.weekday-button-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+/* 반응형 멤버 카드 영역 */
+.member-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 검색 영역 간격 */
+.biweekly-container input[type="text"] {
+    margin-bottom: 0.5rem;
+}

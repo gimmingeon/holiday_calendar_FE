@@ -5,7 +5,7 @@ import { addMember } from "../redux/calendarSlice";
 import dayjs from "dayjs";
 import handleAutoAssign from "../utils/handleAutoAssign";
 
-export default function MemberAutoManage({ days, members, blanks }) {
+export default function MemberAutoManage({ days, members }) {
 
     const dispatch = useDispatch();
 
@@ -61,6 +61,7 @@ export default function MemberAutoManage({ days, members, blanks }) {
                 ...member, holiday_count: member.holiday_count + 1
             }))
         )
+        console.log(members)
     }
 
     // 휴일 전체 빼기

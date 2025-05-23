@@ -10,6 +10,7 @@ import MemberAutoInput from "./memberAutoInput";
 import MemberSelfInput from "./memberSelfInput";
 import * as XLSX from 'xlsx';
 import { useNavigate } from "react-router-dom";
+import BiweeklyInput from "./biweeklyInput";
 
 export default function Calendar() {
 
@@ -40,6 +41,7 @@ export default function Calendar() {
     // 모달 창 열고 닫기
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [autoModalIsOpen, setAutoModalIsOpen] = useState(false);
+    const [biAutoModalIsOpen, setBiAutoModalIsOpen] = useState(false);
     // 날짜의 정보와 멤버
     const [selectedDayInfo, setSelectedDayInfo] = useState({ date: '', members: [], index: '' });
 
@@ -94,6 +96,11 @@ export default function Calendar() {
     const handleAutoClick = () => {
         // 모달창을 염
         setAutoModalIsOpen(true);
+    };
+
+    const handleBiWeekClick = () => {
+        // 모달창을 염
+        setBiAutoModalIsOpen(true);
     };
 
     // 엑셀로 저장
@@ -151,6 +158,7 @@ export default function Calendar() {
                     <li onClick={() => navigate('/')}>🏠 홈</li>
                     <li onClick={() => navigate('/member')}>👤 멤버 관리</li>
                     <li onClick={handleAutoClick}>📆 자동 휴일 배정</li>
+                    <li onClick={handleBiWeekClick}>📆 격주 휴일 배정</li>
                     <li onClick={() => exportDaysExcel(days, currentDate, startOfMonth.day())}>📊 엑셀 저장</li>
                 </ul>
             </div>
@@ -197,7 +205,19 @@ export default function Calendar() {
                             overlayClassName="modal-overlay"
                             className="custom-modal-content"
                         >
-                            <MemberAutoInput days={days} members={members} blanks={blanks.length} />
+                            <MemberAutoInput days={days} members={members} />
+                        </Modal>
+
+                        {/* 격주 멤버 넣기 */}
+                        <Modal
+                            isOpen={biAutoModalIsOpen}
+                            onRequestClose={() => setBiAutoModalIsOpen(false)}
+                            contentLabel="격주 휴일 배정"
+                            overlayClassName="modal-overlay"
+                            className="custom-modal-content"
+                        >
+                            <BiweeklyInput days={days} members={members} />
+
                         </Modal>
 
                         {/* 캘린더 */}
