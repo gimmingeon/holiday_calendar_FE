@@ -13,6 +13,7 @@ import "./css/app.css"
 import { CheckoutPage } from './pages/checkout';
 import { SuccessPage } from './pages/paymentSuccess';
 import { FailPage } from './pages/paymentFail';
+import MateManage from './pages/mateManage';
 
 Modal.setAppElement("#root");
 
@@ -67,6 +68,7 @@ function App() {
         <Route path='/checkout' element={<CheckoutPage />}></Route>
         <Route path='/success' element={<SuccessPage />} />
         <Route path='/fail' element={<FailPage />} />
+        <Route path='/mate' element={<MateManage />} />
       </Routes>
     </div>
   );

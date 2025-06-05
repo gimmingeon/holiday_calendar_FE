@@ -12,8 +12,9 @@ export default function BiweeklyInput({ days, members }) {
     const weekMap = ['일', '월', '화', '수', '목', '금', '토'];
     const [includeWeekdays, setIncludeWeekdays] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-
-    let assignMember = [];
+    // const [assignMember, setAssignMember] = useState([]);
+    const [oneAssignMember, setOneAssignMember] = useState([]);
+    const [twoAssignMember, setTwoAssignMember] = useState([]);
 
     if (!members || members.length === 0) {
         return <div>멤버가 없습니다.</div>
@@ -40,21 +41,32 @@ export default function BiweeklyInput({ days, members }) {
         }
     }
 
-    // 멤버 추가
-    const handlePlusAssignMember = (memberName) => {
-        const isAlreadyAssignMember = assignMember.includes(memberName);
+    // 첫번째 멤버 추가
+    const handlePlusOneAssignMember = (memberName) => {
+        const isAlreadyAssignMember = oneAssignMember.includes(memberName);
 
         if (!isAlreadyAssignMember) {
-            assignMember.push(memberName)
+            setOneAssignMember([...oneAssignMember, memberName]);
         } else {
-            assignMember = assignMember.filter(name => name !== memberName);
+            setOneAssignMember(oneAssignMember.filter(name => name !== memberName));
+        }
+    }
+
+    // 두번째 멤버 추가
+    const handlePlustwoAssignMember = (memberName) => {
+        const isAlreadyAssignMember = twoAssignMember.includes(memberName);
+
+        if (!isAlreadyAssignMember) {
+            setTwoAssignMember([...twoAssignMember, memberName]);
+        } else {
+            setTwoAssignMember(twoAssignMember.filter(name => name !== memberName));
         }
     }
 
     const handleBiweekAssign = () => {
         const includeWeekIndexes = includeWeekdays.map(w => weekMap.indexOf(w));
-        const oneAssignMember = assignMember.slice(0, assignMember.length / 2);
-        const twoAssignMember = assignMember.slice(Math.floor(assignMember.length / 2), assignMember.length);
+        // const oneAssignMember = assignMember.slice(0, assignMember.length / 2);
+        // const twoAssignMember = assignMember.slice(Math.floor(assignMember.length / 2), assignMember.length);
 
         const fullIncluded = days
             .map((obj, index) => {
@@ -71,10 +83,6 @@ export default function BiweeklyInput({ days, members }) {
             if (!groupedWeeks[weekNum]) groupedWeeks[weekNum] = [];
             groupedWeeks[weekNum].push(dayIndex);
         });
-
-        console.log(groupedWeeks);
-        console.log(oneAssignMember);
-        console.log(twoAssignMember);
 
         groupedWeeks.map((week, index) => {
             if (index % 2 === 0) {
@@ -124,18 +132,35 @@ export default function BiweeklyInput({ days, members }) {
                 격주 배정
             </div>
 
-            {readyMember.map((member, index) => {
+            {readyMember.map((member) => {
+                const inOne = oneAssignMember.includes(member.name);
+                const inTwo = twoAssignMember.includes(member.name);
+
+                // 멤버가 속한 그룹에 따라 클래스 결정
+                let groupClass = '';
+                if (inOne && inTwo) groupClass = 'group-both';
+                else if (inOne) groupClass = 'group-one';
+                else if (inTwo) groupClass = 'group-two';
+
                 return (
-                    <div
-                        key={member.id}
-                        onClick={() => handlePlusAssignMember(member.name)}
-                        className={`member-card ${assignMember.includes(member.name) ? 'selected' : ''}`}
-                    >
-                        <div>이름: {member.name}</div>
-                        <div>분류: {member.role}</div>
+                    <div key={member.id}>
+                        <div className={`member-card ${groupClass}`}>
+                            <div>이름: {member.name}</div>
+                            <div>분류: {member.role}</div>
+                        </div>
+
+                        <div className="group-buttons">
+                            <div className="group-button" onClick={() => handlePlusOneAssignMember(member.name)}>
+                                첫번째 그룹
+                            </div>
+                            <div className="group-button" onClick={() => handlePlustwoAssignMember(member.name)}>
+                                두번째 그룹
+                            </div>
+                        </div>
                     </div>
-                )
+                );
             })}
+
 
         </div>
     )
