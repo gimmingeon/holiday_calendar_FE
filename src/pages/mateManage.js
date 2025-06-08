@@ -9,7 +9,7 @@ export default function MateManage() {
 
     const dispatch = useDispatch();
     const mates = useSelector((state) => state.mate.mates);
-    const members = useSelector((state) => state.member.members)
+    const members = useSelector((state) => state.member.members);
     const [registeMate, setRegisteMate] = useState([]);
 
     const handleGetMate = async () => {
@@ -45,17 +45,17 @@ export default function MateManage() {
             return;
         }
         try {
-            await axios.post('/mate', {
+            const response = await axios.post('/mate', {
                 memberAId: registeMate[0],
                 memberBId: registeMate[1]
             }, { withCredentials: true }
             );
 
-            alert("짝이 등록되었습니다!");
+            alert(response.data.message);
             setRegisteMate([]); // 등록 후 상태 초기화
             handleGetMate();
         } catch (error) {
-            alert("짝 등록에 실패했습니다.");
+            alert(error.response?.data?.message || "짝 등록에 실패했습니다.");
         }
 
     }
@@ -81,7 +81,7 @@ export default function MateManage() {
             alert(response.data.message);
             handleGetMate();
         } catch (error) {
-            alert("짝 삭제에 실패했습니다.");
+            alert(error.response?.data?.message || "짝 삭제에 실패했습니다.");
         }
     }
 

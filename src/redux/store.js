@@ -3,6 +3,7 @@ import calendarReducer from './calendarSlice.js'
 import memberReducer from './memberSlice.js'
 import userReducer from './userSlice.js'
 import mateReducer from './mateSlice.js'
+import conditionReducer from './conditionSlice.js'
 
 const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
         member: memberReducer,
         user: userReducer,
         mate: mateReducer,
+        condition: conditionReducer,
     }
 });
 

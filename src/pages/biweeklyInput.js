@@ -145,7 +145,7 @@ export default function BiweeklyInput({ days, members }) {
                 return (
                     <div key={member.id}>
                         <div className={`member-card ${groupClass}`}>
-                            <div>이름: {member.name}</div>
+                            <div>이름: {member.name},</div>
                             <div>분류: {member.role}</div>
                         </div>
 
