@@ -156,7 +156,7 @@ export default function Calendar() {
                 <h2 className="sidebar-title">📅 캘린더</h2>
                 <ul className="sidebar-menu">
                     <li onClick={() => navigate('/')}>🏠 홈</li>
-                    <li onClick={() => navigate('/member')}>👤 멤버 관리</li>
+                    <li onClick={() => navigate('/calendar/member')}>👤 멤버 관리</li>
                     <li onClick={handleAutoClick}>📆 자동 휴일 배정</li>
                     <li onClick={handleBiWeekClick}>📆 격주 휴일 배정</li>
                     <li onClick={() => exportDaysExcel(days, currentDate, startOfMonth.day())}>📊 엑셀 저장</li>

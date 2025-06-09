@@ -45,14 +45,25 @@ const memberSlice = createSlice({
             state.members.push(action.payload); // 그냥 멤버 리스트에 추가
         },
 
-
-
         // form 초기화
         resetForm(state) {
             state.form = { name: '', role: '' };
+        },
+
+        mergeMeberWithCondition: (state, action) => {
+            const { members, conditions } = action.payload;
+
+            state.members = members.map(member => {
+                const condition = conditions.find(c => c.memberId === member.id);
+
+                return {
+                    ...member,
+                    condition: condition || null
+                };
+            });
         }
     }
 });
 
-export const { setMember, updateForm, addMember, resetForm } = memberSlice.actions;
+export const { setMember, updateForm, addMember, resetForm, mergeMeberWithCondition } = memberSlice.actions;
 export default memberSlice.reducer;

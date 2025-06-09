@@ -44,16 +44,18 @@ function App() {
           <Navbar.Brand href='/' className='nav-button'>휴일 자동 배정</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="/" className='nav-button'>홈</Nav.Link>
-            <Nav.Link href="/member" className='nav-button'>멤버 관리</Nav.Link>
-            <Nav.Link href="/checkout" className='nav-button'>결제</Nav.Link>
+            <Nav.Link href="/calendar/member" className='nav-button'>멤버 관리</Nav.Link>
+            <Nav.Link href="/calendar/checkout" className='nav-button'>결제</Nav.Link>
+            <Nav.Link href="/calendar/mate" className='nav-button'>짝 관리</Nav.Link>
+            <Nav.Link href="/calendar/condition" className='nav-button'>조건</Nav.Link>
           </Nav>
           <Nav>
             {isLogin ? (
               <button className="auth-button" onClick={handleLogOut}>로그아웃</button>
             ) : (
               <>
-                <button className="auth-button" onClick={() => navigate('/login')}>로그인</button>
-                <button className="auth-button" onClick={() => navigate('/signUp')}>회원가입</button>
+                <button className="auth-button" onClick={() => navigate('/calendar/login')}>로그인</button>
+                <button className="auth-button" onClick={() => navigate('/calendar/signUp')}>회원가입</button>
               </>
             )}
           </Nav>
@@ -63,14 +65,16 @@ function App() {
 
       <Routes>
         <Route path='/' element={<Calendar />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/member' element={<MemberManage />} />
-        <Route path='/signUp' element={<SignUp />} />
-        <Route path='/checkout' element={<CheckoutPage />}></Route>
-        <Route path='/success' element={<SuccessPage />} />
-        <Route path='/fail' element={<FailPage />} />
-        <Route path='/mate' element={<MateManage />} />
-        <Route path='/condition' element={<ConditionManage />} />
+        <Route path='/calendar'>
+          <Route path='login' element={<Login />} />
+          <Route path='member' element={<MemberManage />} />
+          <Route path='signUp' element={<SignUp />} />
+          <Route path='checkout' element={<CheckoutPage />}></Route>
+          <Route path='success' element={<SuccessPage />} />
+          <Route path='fail' element={<FailPage />} />
+          <Route path='mate' element={<MateManage />} />
+          <Route path='condition' element={<ConditionManage />} />
+        </Route>
       </Routes>
     </div>
   );
