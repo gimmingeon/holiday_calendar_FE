@@ -111,7 +111,7 @@ export default function MateManage() {
                 {members.map((member) => (
                     <div
                         key={member.id}
-                        className={`member-card ${registeMate.includes(member.id) ? "selected" : ""}`}
+                        className={`memberMate-card ${registeMate.includes(member.id) ? "selected" : ""}`}
                         onClick={() => handlePlusRegisteMate(member)}
                     >
                         {member.name}

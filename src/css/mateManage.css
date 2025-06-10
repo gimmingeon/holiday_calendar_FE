@@ -48,7 +48,7 @@
     margin-bottom: 30px;
 }
 
-.member-card {
+.memberMate-card {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 6px;
@@ -57,11 +57,11 @@
     transition: all 0.2s ease;
 }
 
-.member-card:hover {
+.memberMate-card:hover {
     background-color: #f0f0f0;
 }
 
-.member-card.selected {
+.memberMate-card.selected {
     background-color: #d1ffd1;
     font-weight: bold;
 }

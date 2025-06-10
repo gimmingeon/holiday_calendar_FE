@@ -16,21 +16,21 @@
     transition: box-shadow 0.2s ease;
 }
 
-.member-card:hover {
+.memberCondition-card:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.member-name {
+.memberCondition-name {
     font-size: 1.2rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
 }
 
-.member-condition {
+.memberCondition-condition {
     margin-left: 1rem;
 }
 
-.member-condition strong {
+.memberCondition-condition strong {
     color: #333;
 }
 

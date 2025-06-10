@@ -120,7 +120,7 @@ export default function BiweeklyInput({ days, members }) {
                     <button
                         key={week}
                         onClick={() => handleIncludeWeek(week)}
-                        className={`weekday-button ${includeWeekdays.includes(week) ? 'selected' : ''}`}
+                        className={`weekdayBi-button ${includeWeekdays.includes(week) ? 'selected' : ''}`}
                     >
                         {week} {includeWeekdays.includes(week)}
 
@@ -144,7 +144,7 @@ export default function BiweeklyInput({ days, members }) {
 
                 return (
                     <div key={member.id}>
-                        <div className={`member-card ${groupClass}`}>
+                        <div className={`memberBiweekly-card ${groupClass}`}>
                             <div>이름: {member.name},</div>
                             <div>분류: {member.role}</div>
                         </div>
