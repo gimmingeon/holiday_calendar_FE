@@ -4,13 +4,15 @@ const conditionSlice = createSlice({
     name: "condition",
 
     initialState: {
-        conditions: []
+        conditions: [],
+
     },
 
     reducers: {
         setCondition: (state, action) => {
             state.conditions = action.payload;
-        }
+        },
+
     }
 
 });

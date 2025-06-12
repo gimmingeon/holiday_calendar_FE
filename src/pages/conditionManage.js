@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 import { mergeMeberWithCondition, setMember } from "../redux/memberSlice";
 import "../css/conditionManage.css"
 import Modal from "react-modal";
+import ConditionInput from "./conditionAssign";
 
 export default function ConditionManage() {
     const dispatch = useDispatch();
     const members = useSelector((state) => state.member.members);
-    const [memberId, setMemberId] = useState(null);
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [memberConditionInfo, setMemberConditionInfo] = useState({});
 
@@ -32,10 +32,8 @@ export default function ConditionManage() {
     const weekMap = ["일", "월", "화", "수", "목", "금", "토"];
 
     const handleOpenModal = (member) => {
-        setMemberId(member.id);
-        setMemberConditionInfo(member.condition);
+        setMemberConditionInfo(member);
         setModalIsOpen(true);
-        console.log(memberConditionInfo)
     }
 
     return (
@@ -67,7 +65,7 @@ export default function ConditionManage() {
                 overlayClassName="modal-overlay"
                 className="modal-content"
             >
-                <p>{memberConditionInfo.name}</p>
+                <ConditionInput member={memberConditionInfo} />
             </Modal>
         </div>
     )

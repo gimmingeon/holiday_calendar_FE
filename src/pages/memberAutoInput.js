@@ -75,8 +75,6 @@ export default function MemberAutoManage({ days, members }) {
         )
     }
 
-
-
     // 요일 제외
     const handleExcludeWeek = (week) => {
 
