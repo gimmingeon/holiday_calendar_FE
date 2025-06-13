@@ -2,7 +2,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setCondition } from "../redux/conditionSlice";
 import { useEffect, useState } from "react";
-import { mergeMeberWithCondition, setMember } from "../redux/memberSlice";
+import { mergeMemberWithCondition, setMember } from "../redux/memberSlice";
 import "../css/conditionManage.css"
 import Modal from "react-modal";
 import ConditionInput from "./conditionAssign";
@@ -20,7 +20,7 @@ export default function ConditionManage() {
                 const memberRes = await axios.get('/member');
                 const conditionRes = await axios.get('/condition');
 
-                dispatch(mergeMeberWithCondition({ members: memberRes.data, conditions: conditionRes.data }));
+                dispatch(mergeMemberWithCondition({ members: memberRes.data, conditions: conditionRes.data }));
             } catch (error) {
                 alert(error.response?.data?.message || "멤버 조회에 실패했습니다.")
             }

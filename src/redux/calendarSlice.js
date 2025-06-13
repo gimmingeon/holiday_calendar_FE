@@ -23,6 +23,16 @@ const calendarSlice = createSlice({
                 dayItem.member.push(memberName);
             }
         },
+
+        addAutoMember(state, action) {
+            const { day, memberName } = action.payload;
+            const key = day;
+            const dayItem = state.days.find(item => item[key]);
+
+            if (dayItem && !dayItem.member.includes(memberName)) {
+                dayItem.member.push(memberName);
+            }
+        },
         resetDays(state) {
             state.days = [];
         },
@@ -41,5 +51,5 @@ const calendarSlice = createSlice({
     },
 });
 
-export const { addDay, addMember, resetDays, removeMember } = calendarSlice.actions;
+export const { addDay, addMember, resetDays, removeMember, addAutoMember } = calendarSlice.actions;
 export default calendarSlice.reducer;

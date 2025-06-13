@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 // 휴일 자동 배정
 
 export default function handleAutoAssign({
-    autoReadyMember, excludeWeekdays, weekMap, days, dispatch
+    autoReadyMember, excludeWeekdays, weekMap, weeks, dispatch
 }) {
 
     const assignMember = [];
@@ -18,11 +18,11 @@ export default function handleAutoAssign({
         }
     }
 
-    // weekMap([월, 화, 수, 목, 금,토,일])을 [1,2,3,4,5,6,0]으로 변환환
+    // weekMap([월, 화, 수, 목, 금,토,일])을 [1,2,3,4,5,6,0]으로 변환
     const excludeWeekIndexes = excludeWeekdays.map(w => weekMap.indexOf(w));
 
     // 제외 요일 추출하기 (더 주석 필요)
-    const fullExcluded = days
+    const fullExcluded = weeks
         .map((obj, index) => {
             // 객체에서 값만 꺼냄 -> '2025-05-01' 같은 문자열
             const dateStr = Object.values(obj)[0];
@@ -46,13 +46,21 @@ export default function handleAutoAssign({
 
 
     // 날짜 섞기
-    const shuffleDays = [...Array(days.length).keys()].map(i => i + 1).sort(() => Math.random() - 0.5);
+    // const shuffleDays = [...Array(weeks.length).keys()].map(i => i + 1).sort(() => Math.random() - 0.5);
+
+    const shuffleDays = weeks.map(obj =>
+        Number(Object.keys(obj).find(k => k.startsWith("day")).slice(3))
+    ).sort(() => Math.random() - 0.5);
+
+    // console.log(dateIndex)
 
     // 요일 자동 배정
     while (memberNum < assignMember.length) {
 
         const dayIndex = shuffleDays[dayNum];
         const memberName = assignMember[memberNum].name;
+
+
 
         // 제외 요일 확인하고 넘기기
         if (fullExcluded.includes(dayIndex)) {

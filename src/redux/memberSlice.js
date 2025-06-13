@@ -50,7 +50,7 @@ const memberSlice = createSlice({
             state.form = { name: '', role: '' };
         },
 
-        mergeMeberWithCondition: (state, action) => {
+        mergeMemberWithCondition: (state, action) => {
             const { members, conditions } = action.payload;
 
             state.members = members.map(member => {
@@ -61,9 +61,30 @@ const memberSlice = createSlice({
                     condition: condition || null
                 };
             });
+        },
+
+        mergeMemberWithConditionMate: (state, action) => {
+            const { members, mates, conditions } = action.payload;
+
+            state.members = members.map(member => {
+                const condition = conditions.find(c => c.memberId === member.id);
+                const mate = mates.find(m => m.member1Name === member.name || m.member2Name === member.name);
+
+                const mateName = mate
+                    ? mate.member1Name === member.name
+                        ? mate.member2Name
+                        : mate.member1Name
+                    : null;
+
+                return {
+                    ...member,
+                    condition: condition || null,
+                    mate: mateName
+                };
+            });
         }
     }
 });
 
-export const { setMember, updateForm, addMember, resetForm, mergeMeberWithCondition } = memberSlice.actions;
+export const { setMember, updateForm, addMember, resetForm, mergeMemberWithCondition, mergeMemberWithConditionMate } = memberSlice.actions;
 export default memberSlice.reducer;

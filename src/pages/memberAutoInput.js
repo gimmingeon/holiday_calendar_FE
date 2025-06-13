@@ -4,19 +4,45 @@ import "../css/memberAutoInput.css"
 import { addMember } from "../redux/calendarSlice";
 import dayjs from "dayjs";
 import handleAutoAssign from "../utils/handleAutoAssign";
+import axios from "axios";
+import { mergeMemberWithConditionMate } from "../redux/memberSlice";
+import { splitMonth } from "../utils/splitMonth";
 
-export default function MemberAutoManage({ days, members }) {
+export default function MemberAutoManage({ days }) {
 
     const dispatch = useDispatch();
+    const members = useSelector((state) => state.member.members);
 
     const [autoReadyMember, setAutoReadyMember] = useState(members);
     const [searchTerm, setSearchTerm] = useState('');
     const [excludeWeekdays, setExcludeWeekdays] = useState([]);
     const weekMap = ['일', '월', '화', '수', '목', '금', '토'];
 
+    useEffect(() => {
+        const handleGetMember = async () => {
+            try {
+                const memberRes = await axios.get('/member');
+                const conditionRes = await axios.get('/condition');
+                const mateRes = await axios.get('/mate');
+
+                dispatch(mergeMemberWithConditionMate({
+                    members: memberRes.data,
+                    conditions: conditionRes.data,
+                    mates: mateRes.data
+                }));
+            } catch (error) {
+                alert(error.response?.data?.message || "멤버 조회에 실패했습니다.")
+            }
+        }
+
+        handleGetMember();
+    }, [dispatch])
+
     if (!members || members.length === 0) {
         return <div>멤버가 없습니다.</div>
     }
+
+    const splitweek = splitMonth(days);
 
     // 멤버 검색
     const handleFindMember = (e) => {
@@ -61,7 +87,6 @@ export default function MemberAutoManage({ days, members }) {
                 ...member, holiday_count: member.holiday_count + 1
             }))
         )
-        console.log(members)
     }
 
     // 휴일 전체 빼기
@@ -126,7 +151,29 @@ export default function MemberAutoManage({ days, members }) {
                     ))}
                 </div>
 
-                <button onClick={() => handleAutoAssign({ autoReadyMember, excludeWeekdays, weekMap, days, dispatch })}>휴일 자동 배정</button>
+                {/* <button onClick={() =>
+                    handleAutoAssign({
+                        autoReadyMember,
+                        excludeWeekdays,
+                        weekMap,
+                        days,
+                        dispatch
+                    })}>휴일 자동 배정</button> */}
+
+                {splitweek.map((weeks, index) => {
+                    return (
+                        <div key={index}>
+                            <div button onClick={() =>
+                                handleAutoAssign({
+                                    autoReadyMember,
+                                    excludeWeekdays,
+                                    weekMap,
+                                    weeks,
+                                    dispatch
+                                })}>{index + 1}번째 주</div>
+                        </div>
+                    )
+                })}
                 {autoReadyMember.map((members, index) => {
                     return (
                         <div
