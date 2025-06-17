@@ -68,18 +68,18 @@ const memberSlice = createSlice({
 
             state.members = members.map(member => {
                 const condition = conditions.find(c => c.memberId === member.id);
-                const mate = mates.find(m => m.member1Name === member.name || m.member2Name === member.name);
+                const matchedMates = mates.filter(
+                    m => m.member1Name === member.name || m.member2Name === member.name
+                );
 
-                const mateName = mate
-                    ? mate.member1Name === member.name
-                        ? mate.member2Name
-                        : mate.member1Name
-                    : null;
+                const mateNames = matchedMates.map(m =>
+                    m.member1Name === member.name ? m.member2Name : m.member1Name
+                );
 
                 return {
                     ...member,
                     condition: condition || null,
-                    mate: mateName
+                    mate: mateNames
                 };
             });
         }

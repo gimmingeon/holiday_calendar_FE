@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import "../css/memberAutoInput.css"
 import { addMember } from "../redux/calendarSlice";
 import dayjs from "dayjs";
-import handleAutoAssign from "../utils/handleAutoAssign";
+import handleAutoAssign from "../utils/handleAutoAssigned";
 import axios from "axios";
 import { mergeMemberWithConditionMate } from "../redux/memberSlice";
 import { splitMonth } from "../utils/splitMonth";
@@ -36,7 +36,7 @@ export default function MemberAutoManage({ days }) {
         }
 
         handleGetMember();
-    }, [dispatch])
+    }, [dispatch]);
 
     if (!members || members.length === 0) {
         return <div>멤버가 없습니다.</div>
@@ -63,7 +63,12 @@ export default function MemberAutoManage({ days }) {
         setAutoReadyMember(prev =>
             prev.map((member) =>
                 member.id === memberId
-                    ? { ...member, holiday_count: member.holiday_count + 1 }
+                    ? {
+                        ...member,
+                        holiday_count: member.holiday_count + 1,
+                        condition: member.condition,
+                        mate: member.mate
+                    }
                     : member
             )
         );
@@ -74,7 +79,12 @@ export default function MemberAutoManage({ days }) {
         setAutoReadyMember(prev =>
             prev.map((member) =>
                 member.id === memberId && member.holiday_count > 0
-                    ? { ...member, holiday_count: member.holiday_count - 1 }
+                    ? {
+                        ...member,
+                        holiday_count: member.holiday_count - 1,
+                        condition: member.condition,
+                        mate: member.mate
+                    }
                     : member
             )
         );
@@ -84,7 +94,10 @@ export default function MemberAutoManage({ days }) {
     const handleAllPlusHoliday = () => {
         setAutoReadyMember(prev =>
             prev.map((member) => ({
-                ...member, holiday_count: member.holiday_count + 1
+                ...member,
+                holiday_count: member.holiday_count + 1,
+                condition: member.condition,
+                mate: member.mate
             }))
         )
     }
@@ -94,7 +107,12 @@ export default function MemberAutoManage({ days }) {
         setAutoReadyMember(prev =>
             prev.map((member) =>
                 member.holiday_count > 0
-                    ? { ...member, holiday_count: member.holiday_count - 1 }
+                    ? {
+                        ...member,
+                        holiday_count: member.holiday_count - 1,
+                        condition: member.condition,
+                        mate: member.mate
+                    }
                     : member
             )
         )
@@ -151,29 +169,25 @@ export default function MemberAutoManage({ days }) {
                     ))}
                 </div>
 
-                {/* <button onClick={() =>
-                    handleAutoAssign({
-                        autoReadyMember,
-                        excludeWeekdays,
-                        weekMap,
-                        days,
-                        dispatch
-                    })}>휴일 자동 배정</button> */}
-
-                {splitweek.map((weeks, index) => {
-                    return (
-                        <div key={index}>
-                            <div button onClick={() =>
+                {splitweek.map((weeks, index) => (
+                    <div key={index} className="week-button-wrapper">
+                        <div
+                            className="week-button"
+                            onClick={() =>
                                 handleAutoAssign({
                                     autoReadyMember,
                                     excludeWeekdays,
                                     weekMap,
                                     weeks,
                                     dispatch
-                                })}>{index + 1}번째 주</div>
+                                })
+                            }
+                        >
+                            {index + 1}번째 주
                         </div>
-                    )
-                })}
+                    </div>
+                ))}
+
                 {autoReadyMember.map((members, index) => {
                     return (
                         <div

@@ -11,6 +11,9 @@ export default function handleAutoAssign({
     let memberNum = 0;
     let dayNum = 0;
 
+    // weekMap([월, 화, 수, 목, 금,토,일])을 [1,2,3,4,5,6,0]으로 변환
+    const excludeWeekIndexes = excludeWeekdays.map(w => weekMap.indexOf(w));
+
     // 휴일의 개수만큼 멤버 곱하기 
     for (let member of autoReadyMember) {
         for (let i = 0; i < member.holiday_count; i++) {
@@ -18,8 +21,6 @@ export default function handleAutoAssign({
         }
     }
 
-    // weekMap([월, 화, 수, 목, 금,토,일])을 [1,2,3,4,5,6,0]으로 변환
-    const excludeWeekIndexes = excludeWeekdays.map(w => weekMap.indexOf(w));
 
     // 제외 요일 추출하기 (더 주석 필요)
     const fullExcluded = weeks
@@ -28,7 +29,7 @@ export default function handleAutoAssign({
             const dateStr = Object.values(obj)[0];
             // 날짜의 요일을 숫자로 반환 (일요일: 0, 월요일: 1, ..., 토요일: 6)
             const weekday = dayjs(dateStr).day();
-            return { index: index + 1, weekday };
+            return { index: index, weekday };
         })
         // 제외인 요일 필터링 (요일이 6또는 0인 경우만 필터링)
         .filter(({ weekday }) => excludeWeekIndexes.includes(weekday))
@@ -52,18 +53,16 @@ export default function handleAutoAssign({
         Number(Object.keys(obj).find(k => k.startsWith("day")).slice(3))
     ).sort(() => Math.random() - 0.5);
 
-    // console.log(dateIndex)
-
     // 요일 자동 배정
     while (memberNum < assignMember.length) {
 
         const dayIndex = shuffleDays[dayNum];
+        const exclude = shuffleDays[dayNum].weekday;
+
         const memberName = assignMember[memberNum].name;
 
-
-
         // 제외 요일 확인하고 넘기기
-        if (fullExcluded.includes(dayIndex)) {
+        if (fullExcluded.includes(exclude)) {
 
             dayNum++;
             if (dayNum === shuffleDays.length) {
@@ -84,4 +83,9 @@ export default function handleAutoAssign({
         }
 
     }
+
+    // while () {
+
+    // }
+
 }
