@@ -61,6 +61,18 @@ export default function ConditionInput({ member }) {
         }
     }
 
+    const handleDeleteCondition = async () => {
+        try {
+            const response = await axios.delete("/condition", {
+                data: { id: member.condition.id }
+            });
+            alert(response.data.message);
+            window.location.reload();
+        } catch (error) {
+            alert(error.response?.data?.message || "조건 삭제에 실패했습니다.");
+        }
+    }
+
     return (
         <div className="conditionAssign-form">
             <div className="conditionAssign-member-name">이름 : {member.name}</div>
@@ -122,6 +134,8 @@ export default function ConditionInput({ member }) {
             />
 
             <button onClick={handleRegisterCondition}>등록</button>
+
+            <button onClick={handleDeleteCondition}>조건 삭제</button>
         </div>
 
     )

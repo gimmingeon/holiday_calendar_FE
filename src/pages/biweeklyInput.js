@@ -145,15 +145,15 @@ export default function BiweeklyInput({ days, members }) {
                 return (
                     <div key={member.id}>
                         <div className={`memberBiweekly-card ${groupClass}`}>
-                            <div>이름: {member.name},</div>
+                            <div>이름: {member.name}</div>
                             <div>분류: {member.role}</div>
                         </div>
 
                         <div className="group-buttons">
-                            <div className="group-button" onClick={() => handlePlusOneAssignMember(member.name)}>
+                            <div className="group-button1" onClick={() => handlePlusOneAssignMember(member.name)}>
                                 첫번째 그룹
                             </div>
-                            <div className="group-button" onClick={() => handlePlustwoAssignMember(member.name)}>
+                            <div className="group-button2" onClick={() => handlePlustwoAssignMember(member.name)}>
                                 두번째 그룹
                             </div>
                         </div>

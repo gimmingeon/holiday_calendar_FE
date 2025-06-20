@@ -220,6 +220,8 @@ export default function Calendar() {
 
                         </Modal>
 
+
+
                         {/* 캘린더 */}
                         {days.map((item, index) => {
                             const key = Object.keys(item).find((k) => k !== "member");
@@ -227,15 +229,21 @@ export default function Calendar() {
                             const members = item.member;
                             const date_index = index;
 
+                            const weekDay = (startDay + index) % 7;
+                            const weekNumber = Math.floor((startDay + index) / 7) + 1;
+
                             return (
-                                <div
-                                    key={index}
-                                    onClick={() => handleDateClick(date, members, date_index)}
-                                    className="calendar-cell"
-                                >
-                                    <div className="date-number">{index + 1}</div>
-                                    <div className="members">👤 {members.join(", ")}</div>
-                                </div>
+                                <>
+                                    <div
+                                        key={index}
+                                        onClick={() => handleDateClick(date, members, date_index)}
+                                        className="calendar-cell"
+                                    >
+                                        <div className="date-number">{index + 1}</div>
+                                        <div className="members">👤 {members.join(", ")}</div>
+                                    </div>
+                                </>
+
                             );
                         })}
                     </div>

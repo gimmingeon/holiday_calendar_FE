@@ -72,8 +72,8 @@ export default function MateManage() {
         }
     }
 
+    // 짝 삭제하기
     const handleDeleteMate = async (mate) => {
-        console.log(mate)
         try {
             const response = await axios.delete('/mate', {
                 data: { id: mate }

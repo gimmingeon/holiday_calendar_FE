@@ -38,6 +38,10 @@ export default function MemberAutoManage({ days }) {
         handleGetMember();
     }, [dispatch]);
 
+    useEffect(() => {
+        setAutoReadyMember(members);
+    }, [members]);
+
     if (!members || members.length === 0) {
         return <div>멤버가 없습니다.</div>
     }
