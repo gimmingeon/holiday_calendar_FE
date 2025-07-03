@@ -62,13 +62,39 @@ export default function handleAutoAssign({
             const memberName = autoReadyMember[i].name;
 
             if (connectNotHoliday > 0 && attempts <= 5000) {
+
+                // 멤버가 있는 날을 추출해서 날짜값을 선택한다
+                // 예시
+                /*
+                    [ dayjs('2025-06-01'), dayjs('2025-06-05') ]
+                */
+
                 const assignedDatesForMember = shuffleDays
                     .filter(day => (day.member || []).includes(memberName))
                     .map(day => dayjs(Object.values(day)[0]));
 
-                const hasConnectConflict = assignedDatesForMember.some(date =>
-                    Math.abs(currentDate.diff(date, 'day')) <= connectNotHoliday - 1
-                );
+                // 
+                const dates = [
+                    ...assignedDatesForMember.map(d => d.startOf('day')),
+                    currentDate.startOf('day')
+                ].sort((a, b) => a.unix() - b.unix());
+
+                let consecutiveCount = 1;
+                let hasConnectConflict = false;
+
+                for (let k = 1; k < dates.length; k++) {
+                    const diff = dates[k].diff(dates[k - 1], 'day');
+                    if (diff === 1) {
+                        consecutiveCount++;
+                        if (consecutiveCount >= connectNotHoliday) {
+                            hasConnectConflict = true;
+                            break;
+                        }
+                    } else {
+                        consecutiveCount = 1; // 연속이 끊겼으니 초기화
+                    }
+                }
+
 
                 // 연속 휴일 금지
                 if (hasConnectConflict) {
